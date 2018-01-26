@@ -1,16 +1,20 @@
+
 import React from 'react';
+import { Route } from 'react-router-dom';
+
+// Components
+import PokemonIndexItem from './pokemon_index_item';
+import PokemonDetailContainer from './pokemon_detail_container';
+
 
 
 class PokemonIndex extends React.Component {
-  constructor(props){
-    super(props);
-    this.renderPokemonList = this.renderPokemonList.bind(this);
-  }
+
 // ========================================
 // Methods
 // ========================================
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.requestAllPokemon();
   }
 
@@ -19,12 +23,7 @@ class PokemonIndex extends React.Component {
 // ========================================
 
   renderPokemonListItem(poke, id) {
-    return (
-      <li key={id} className="pokemon-list-item">
-        <img src={poke.image_url}></img>
-        <p>{poke.name}</p>
-      </li>
-    );
+    return <PokemonIndexItem poke={poke} key={id}/>;
   }
 
   renderPokemonList(pokemon) {
@@ -36,13 +35,16 @@ class PokemonIndex extends React.Component {
   }
 
   render() {
-    // console.log(`pokemonz:${this.props.pokemon[0]}`);
-    // console.log(this.props.pokemon);
+    const {pokemon} = this.props;
+
+    if (!pokemon) return null;
+    
     return (
       <div className="pokemon-index-container">
         <ul className="pokemon-list">
-          {this.renderPokemonList(this.props.pokemon)}
+          {this.renderPokemonList(pokemon)}
         </ul>
+        <Route path="/pokemon/:pokemonId" component = { PokemonDetailContainer }/>
       </div>
     );
   }

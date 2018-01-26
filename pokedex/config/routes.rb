@@ -4,5 +4,6 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     resources :pokemon, except: [:new, :edit]
+    resources :items, except: [:new, :edit]
   end
 end
